@@ -1,0 +1,12 @@
+F:\Projects\easy-screen-shot\easy screen shot\bin\Debug\easy screen shot.exe.config
+F:\Projects\easy-screen-shot\easy screen shot\bin\Debug\easy screen shot.exe
+F:\Projects\easy-screen-shot\easy screen shot\bin\Debug\easy screen shot.pdb
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy screen shot.csprojResolveAssemblyReference.cache
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy_screen_shot.Form1.resources
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy_screen_shot.Properties.Resources.resources
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy screen shot.csproj.GenerateResource.Cache
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy screen shot.exe
+F:\Projects\easy-screen-shot\easy screen shot\obj\Debug\easy screen shot.pdb
+F:\Projects\Tomps Screenshot Utility\bin\Debug\easy screen shot.exe.config
+F:\Projects\Tomps Screenshot Utility\obj\Debug\easy screen shot.exe
+F:\Projects\Tomps Screenshot Utility\obj\Debug\easy screen shot.pdb
