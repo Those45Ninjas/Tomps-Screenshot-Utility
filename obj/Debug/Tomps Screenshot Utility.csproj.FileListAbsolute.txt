@@ -7,3 +7,12 @@ F:\Projects\Tomps Screenshot Utility\obj\Debug\tomps_screenshot_utility.Properti
 F:\Projects\Tomps Screenshot Utility\obj\Debug\Tomps Screenshot Utility.csproj.GenerateResource.Cache
 F:\Projects\Tomps Screenshot Utility\obj\Debug\Tomps Screenshot Utility.exe
 F:\Projects\Tomps Screenshot Utility\obj\Debug\Tomps Screenshot Utility.pdb
+F:\Projects\Tomps-Screenshot-Utility\bin\Debug\Tomps Screenshot Utility.exe.config
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\Tomps Screenshot Utility.exe
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\Tomps Screenshot Utility.pdb
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\Tomps Screenshot Utility.csprojResolveAssemblyReference.cache
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\tomps_screenshot_utility.Form1.resources
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\tomps_screenshot_utility.Properties.Resources.resources
+F:\Projects\Tomps-Screenshot-Utility\obj\Debug\Tomps Screenshot Utility.csproj.GenerateResource.Cache
+F:\Projects\Tomps-Screenshot-Utility\bin\Debug\Tomps Screenshot Utility.exe
+F:\Projects\Tomps-Screenshot-Utility\bin\Debug\Tomps Screenshot Utility.pdb

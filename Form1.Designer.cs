@@ -28,16 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.saveCaptureDialog = new System.Windows.Forms.SaveFileDialog();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.captureToFileButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.captureUploadButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // saveCaptureDialog
+            // 
+            this.saveCaptureDialog.DefaultExt = "png";
+            this.saveCaptureDialog.FileName = "screenshot";
+            this.saveCaptureDialog.Title = "Save Screenshot";
             // 
             // comboBox1
             // 
@@ -60,22 +69,22 @@
             this.captureToFileButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.captureToFileButton.Location = new System.Drawing.Point(0, 0);
             this.captureToFileButton.Name = "captureToFileButton";
-            this.captureToFileButton.Size = new System.Drawing.Size(154, 53);
+            this.captureToFileButton.Size = new System.Drawing.Size(154, 81);
             this.captureToFileButton.TabIndex = 1;
             this.captureToFileButton.Text = "Capture and save to a file";
             this.captureToFileButton.UseVisualStyleBackColor = true;
             this.captureToFileButton.Click += new System.EventHandler(this.captureToFileButton_Click);
             // 
-            // button1
+            // captureUploadButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(154, 53);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Capture and upload to imgur.com";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.captureUploadButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.captureUploadButton.Location = new System.Drawing.Point(0, 0);
+            this.captureUploadButton.Name = "captureUploadButton";
+            this.captureUploadButton.Size = new System.Drawing.Size(154, 81);
+            this.captureUploadButton.TabIndex = 2;
+            this.captureUploadButton.Text = "Capture and upload to imgur.com";
+            this.captureUploadButton.UseVisualStyleBackColor = true;
+            this.captureUploadButton.Click += new System.EventHandler(this.captureUploadButton_Click);
             // 
             // splitContainer1
             // 
@@ -90,23 +99,42 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.button1);
-            this.splitContainer1.Size = new System.Drawing.Size(312, 53);
+            this.splitContainer1.Panel2.Controls.Add(this.captureUploadButton);
+            this.splitContainer1.Size = new System.Drawing.Size(312, 81);
             this.splitContainer1.SplitterDistance = 154;
             this.splitContainer1.TabIndex = 3;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBar.Location = new System.Drawing.Point(4, 106);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(312, 17);
+            this.progressBar.TabIndex = 4;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon.BalloonTipText = "done";
+            this.notifyIcon.BalloonTipTitle = "done the upload";
+            this.notifyIcon.Text = "Upload Comlete";
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.BalloonTipClicked += new System.EventHandler(this.notifyIcon_BalloonTipClicked);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(320, 82);
+            this.ClientSize = new System.Drawing.Size(320, 127);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.progressBar);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(4);
             this.Text = "Tomps Screenshot Utility Utility 0.1.0b";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -119,8 +147,10 @@
         private System.Windows.Forms.SaveFileDialog saveCaptureDialog;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button captureToFileButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button captureUploadButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 
