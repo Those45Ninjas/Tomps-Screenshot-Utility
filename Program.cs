@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Drawing;
@@ -12,7 +9,7 @@ namespace tomps_screenshot_utility
 {
     static class Program
     {
-        static Form1 mainForm;
+        static MainForm mainForm;
         public static bool isUploading = false;
         /// <summary>
         /// The main entry point for the application.
@@ -22,7 +19,7 @@ namespace tomps_screenshot_utility
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            mainForm = new Form1();
+            mainForm = new MainForm();
             Application.Run(mainForm);
         }
         public static void CaptureReigonToFile(Rectangle rect,string fileName, int delay)

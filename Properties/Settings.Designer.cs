@@ -22,5 +22,17 @@ namespace tomps_screenshot_utility.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int lastMode {
+            get {
+                return ((int)(this["lastMode"]));
+            }
+            set {
+                this["lastMode"] = value;
+            }
+        }
     }
 }
