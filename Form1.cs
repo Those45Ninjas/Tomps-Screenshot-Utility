@@ -43,97 +43,82 @@ namespace tomps_screenshot_utility
             }
         }
 
-        private Bitmap CaptureReigon(Rectangle rect)
+        private void TakeScreenshot(bool upload)
         {
-            Bitmap bitmap = new Bitmap(rect.Width, rect.Height);
-            using (Graphics graphics = Graphics.FromImage(bitmap))
-            {
-                graphics.CopyFromScreen(rect.X, rect.Y, 0, 0, new Size(rect.Width, rect.Height));
-            }
-            return bitmap;
-        }
-        private void Capture(bool upload)
-        {
-            this.WindowState = FormWindowState.Minimized;
-
-            // Capture the image
-            Bitmap bitmap;
-
+            Rectangle region;
             string selectedValue = comboBox1.SelectedItem.ToString();
+
+            // Capture Single Display
             if (screens.ContainsKey(selectedValue))
-                bitmap = CaptureReigon(screens[selectedValue]);
-            else if (selectedValue == "Window")
-                bitmap = CaptureReigon(new Rectangle(Screen.PrimaryScreen.Bounds.Location,new Size(64,64)));
-            else if (selectedValue == "Region")
-                bitmap = CaptureReigon(SystemInformation.VirtualScreen);
+                region = screens[selectedValue];
+            // Testing capture
+            else if (selectedValue == "250 x 250")
+                region = new Rectangle(0,0,250, 250);
+            // Capture EVERYTHING
             else
-                bitmap = CaptureReigon(SystemInformation.VirtualScreen);
+                region = SystemInformation.VirtualScreen;
 
-            // Save or upload the image
-            if (upload)
+            // Find out where to save the file
+            #region Find Save Location
+            string fileName;
+            if(upload)
             {
-                this.WindowState = FormWindowState.Normal;
-
-                // Create a tempoary file
-                string tempFileName = "";
-                try
-                {
-                    tempFileName = Path.GetTempFileName();
-                    FileInfo fileInfo = new FileInfo(tempFileName);
-                    fileInfo.Attributes = FileAttributes.Temporary;
-
-                    bitmap.Save(tempFileName, System.Drawing.Imaging.ImageFormat.Png);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Unable to create TEMP file or set its attributes. Uploading Failed!" + Environment.NewLine + ex.Message);
-                }
-
-                using (WebClient w = new WebClient())
-                {
-                    w.Headers.Add("Authorization", "Client-ID de4ed08b9722623");
-                    var values = new System.Collections.Specialized.NameValueCollection()
-                    {
-                        {"image",Convert.ToBase64String(File.ReadAllBytes(tempFileName)) }
-                    };
-
-                    File.Delete(tempFileName);
-
-                    w.UploadProgressChanged += new UploadProgressChangedEventHandler(UploadProgressChanged);
-                    w.UploadValuesCompleted += new UploadValuesCompletedEventHandler(UploadComplete);
-                    w.UploadValuesAsync(new Uri("https://api.imgur.com/3/upload.xml"), values);
-                }
+                fileName = Path.GetTempFileName();
+                FileInfo fileInfo = new FileInfo(fileName);
+                fileInfo.Attributes = FileAttributes.Temporary;
             }
             else
             {
                 if (saveCaptureDialog.ShowDialog() == DialogResult.OK)
                 {
-                    bitmap.Save(saveCaptureDialog.FileName, System.Drawing.Imaging.ImageFormat.Png);
+                    fileName = saveCaptureDialog.FileName;
                 }
-                this.WindowState = FormWindowState.Normal;
+                else
+                    return;
+            }
+            #endregion
+            // Do the screen capture process
+            Program.CaptureReigonToFile(region, fileName, (upload)?0 : 500) ;
+
+            // Upload the image
+            if(upload && !Program.isUploading)
+            {
+                captureUploadButton.Enabled = false;
+                Program.UploadImage(fileName);
+                File.Delete(fileName);
             }
         }
 
         private void captureToFileButton_Click(object sender, EventArgs e)
         {
-            Capture(false);
+            TakeScreenshot(false);
         }
         private void captureUploadButton_Click(object sender, EventArgs e)
         {
-            Capture(true);
+            TakeScreenshot(true);
         }
 
-        private void UploadProgressChanged(object sender, UploadProgressChangedEventArgs e)
+        public void UploadProgressChanged(object sender, UploadProgressChangedEventArgs e)
         {
             if(e.ProgressPercentage <= 100 && e.ProgressPercentage >= 0)
                 progressBar.Value = e.ProgressPercentage;
         }
-        private void UploadComplete(object sender, UploadValuesCompletedEventArgs e)
+        public void UploadComplete(object sender, UploadValuesCompletedEventArgs e)
         {
-            progressBar.Value = 100;
-            notifyIcon.Icon = SystemIcons.Application;
-            imageUrl = XDocument.Load(new MemoryStream(e.Result)).Element("data").Element("link").Value;
-            notifyIcon.ShowBalloonTip(15000, "Screenshot Upload Complete", String.Format("Your screenshot has finished uploading to {0}. Click to view it",imageUrl), ToolTipIcon.Info);
+            captureUploadButton.Enabled = true;
+            if (e.Error == null)
+            {
+                progressBar.Value = 100;
+                imageUrl = XDocument.Load(new MemoryStream(e.Result)).Element("data").Element("link").Value;
+                notifyIcon.Icon = SystemIcons.Information;
+                notifyIcon.ShowBalloonTip(15000, "Screenshot Upload Complete", String.Format("Your screenshot has finished uploading to {0}. Click to view it", imageUrl), ToolTipIcon.Info);
+            }
+            else
+            {
+                imageUrl = null;
+                notifyIcon.Icon = SystemIcons.Error;
+                notifyIcon.ShowBalloonTip(15000, "Screenshot Upload Failed", String.Format("Your screenshot has failed to upload to imgur. Are you connected to the internet? ({0})",e.Error.Message), ToolTipIcon.Info);
+            }
         }
 
         private void notifyIcon_BalloonTipClicked(object sender, EventArgs e)
@@ -144,6 +129,11 @@ namespace tomps_screenshot_utility
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if(Program.isUploading)
+            {
+                if(MessageBox.Show("Are you sure you want to stop uploading your image?","Stop Upload?",MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
+                    e.Cancel = true;
+            }
             Properties.Settings.Default.Save();
         }
     }

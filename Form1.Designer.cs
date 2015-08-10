@@ -55,6 +55,7 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "250 x 250",
             "All Displays",
             "Window",
             "Region"});
@@ -130,10 +131,12 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.progressBar);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Padding = new System.Windows.Forms.Padding(4);
-            this.Text = "Tomps Screenshot Utility Utility 0.1.0b";
+            this.Text = "Tomps Screenshot Utility 0.3.0b";
+            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
